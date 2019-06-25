@@ -1,0 +1,46 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.6.RELEASE'
+	id 'java'
+	id 'com.google.cloud.tools.jib' version '0.9.7'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.github.wreulicke'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation "com.linecorp.armeria:armeria:0.87.0"
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'io.projectreactor:reactor-test'
+}
+
+
+jib {
+	container {
+		jvmFlags = ['-Xms512m']
+		mainClass = 'com.github.wreulicke.client.DemoApplication'
+		args = []
+		ports = ['8080/tcp']
+	}
+	useOnlyProjectCache = true
+}
+
+jib {
+}
+jib.to.image = '449938066965.dkr.ecr.ap-northeast-1.amazonaws.com/client'
+jib.to.credHelper = "ecr-login"
