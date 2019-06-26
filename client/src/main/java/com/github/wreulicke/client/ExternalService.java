@@ -14,6 +14,7 @@ import com.linecorp.armeria.common.AggregatedHttpResponse;
 public class ExternalService {
 
     public CompletableFuture<AggregatedHttpResponse> get() {
+        // 本当はフィールドに持っておいたほうが良さそう
         HttpClient httpClient = HttpClient.of("http://group:backend/");
         return httpClient.get("/").aggregate();
     }

@@ -23,5 +23,4 @@ public class RootController {
         return externalService.get().thenApply(r -> r.content().toString(StandardCharsets.UTF_8));
     }
 
-
 }
