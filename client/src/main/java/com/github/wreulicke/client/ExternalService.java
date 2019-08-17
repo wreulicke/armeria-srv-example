@@ -13,9 +13,13 @@ import com.linecorp.armeria.common.AggregatedHttpResponse;
 @Service
 public class ExternalService {
 
+    private final HttpClient httpClient;
+    
+    public ExternalService(HttpClient httpClient) {
+        this.httpClient = httpClient;
+    }
+    
     public CompletableFuture<AggregatedHttpResponse> get() {
-        // 本当はフィールドに持っておいたほうが良さそう
-        HttpClient httpClient = HttpClient.of("http://group:backend/");
         return httpClient.get("/").aggregate();
     }
 }

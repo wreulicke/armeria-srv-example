@@ -20,7 +20,8 @@ public class RootController {
 
     @GetMapping("/")
     public CompletableFuture<String> index() {
-        return externalService.get().thenApply(r -> r.content().toString(StandardCharsets.UTF_8));
+        return externalService.get()
+            .thenApply(r -> "Response: " + r.content().toString(StandardCharsets.UTF_8));
     }
 
 }
